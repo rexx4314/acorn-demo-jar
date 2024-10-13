@@ -1,0 +1,20 @@
+# 기존에 생성한 알파인 기반 OpenJDK 17 + Maven 3.8.1 베이스 이미지 사용
+FROM rex-alpine-openjdk17-maven381:1.0
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# JAR 파일 경로를 빌드 아규먼트로 정의 (원하는 경로로 변경 가능)
+ARG JAR_FILE=target/metric-collection-oaxdywjjff.jar
+
+# 프로젝트의 소스 코드 복사
+COPY . .
+
+# Maven을 사용하여 프로젝트 빌드 (테스트 생략)
+RUN mvn clean package -DskipTests
+
+# JAR 파일 경로를 환경 변수로 설정
+ENV JAR_NAME=$JAR_FILE
+
+# JAR 파일을 실행 (쉘에서 변수 해석)
+CMD sh -c "java -jar $JAR_NAME"
