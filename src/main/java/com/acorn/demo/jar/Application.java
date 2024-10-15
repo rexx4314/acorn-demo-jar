@@ -1,5 +1,6 @@
 package com.acorn.demo.jar;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,13 @@ public class Application {
 @RestController
 class HelloWorldController {
 
+//	@Value("${acorn.message:Default Profile Message}")
+	@Value("${acorn.message}")
+	private String acornMessage;
+
 	@GetMapping("/")
 	public String index() {
-		return "Welcome Acorn!";
+		return "Welcome Acorn! Profile: " + acornMessage;
 	}
 
 	@GetMapping("/hello")
