@@ -1,0 +1,17 @@
+# Alpine 베이스 이미지 사용
+FROM alpine:latest
+
+# OpenJDK 17 설치 및 캐시 제거
+RUN apk add --no-cache openjdk17-jdk && \
+    rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
+
+# 환경 변수 설정 (전역 설정)
+ENV JAVA_HOME=/usr/lib/jvm/default-jvm
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 기본적으로 bash를 실행하도록 설정
+CMD ["/bin/sh"]
+
